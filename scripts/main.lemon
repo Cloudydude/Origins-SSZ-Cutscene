@@ -173,10 +173,6 @@ function void fn07cd82()
 		{
 			XtraInClaw()
 			return
-			// return
-			// somefunction()
-			// leave some example code in a function
-			// to demonstrate how to make your own version
 		}
 
 
