@@ -1,0 +1,11 @@
+{
+	"eggman-black-00":  { "File": "egg black.bmp", "Rect": "0,0,49,64", "Center": "25,40" },
+	"eggman-black-01":  { "File": "egg black.bmp", "Rect": "50,0,47,56", "Center": "21,35" },
+	"eggman-black-02":  { "File": "egg black.bmp", "Rect": "98,0,49,64", "Center": "22,40" },
+	"eggman-black-03":  { "File": "egg black.bmp", "Rect": "148,0,47,56", "Center": "24,35" },
+
+	"eggman-blue_glasses-00":  { "File": "egg blueglasses.bmp", "Rect": "0,0,49,64", "Center": "25,40" },
+	"eggman-blue_glasses-01":  { "File": "egg blueglasses.bmp", "Rect": "50,0,47,56", "Center": "21,35" },
+	"eggman-blue_glasses-02":  { "File": "egg blueglasses.bmp", "Rect": "98,0,49,64", "Center": "22,40" },
+	"eggman-blue_glasses-03":  { "File": "egg blueglasses.bmp", "Rect": "148,0,47,56", "Center": "24,35" }
+}

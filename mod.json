@@ -1,0 +1,27 @@
+{
+	"Metadata":
+	{
+		"Name": "Eggrobo goes pop",
+		"Author": "iCloudius",
+		"Description": "Pop goes the Eddy",
+		"ModVersion": "1.0"
+	},
+	"Settings":
+	{
+		"Group1":
+		[
+			{
+				"InternalName": "Eggmen",
+				"DisplayName": "Glasses style",
+				"Variable": "Egg.Glasses",
+				"DefaultValue": "0",	
+				"Category": "Gameplay",			
+				"Options":
+				{
+					"0": "Black",
+					"1": "Blue Glasses"
+				}
+			}
+		]
+	}
+}
