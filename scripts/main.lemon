@@ -60,7 +60,7 @@ function void fn07cc26()
 }
 
 //# address-hook(0x200070)
-function void Thing()
+function void Eggmanfalls()
 {
 	if (objA0.velocity.y >= 0xb28)
 	{
@@ -213,9 +213,7 @@ function void SonicTailsClaw()
 function void XtraClawcords()
 {
     if (!isMainCharacter(CHARACTER_KNUCKLES))
-    {
         SonicTailsClaw()
-    }
 }
 
 function bool XtraOnGround()
@@ -233,12 +231,11 @@ function void SonicTailsGround()
 	objA1.position.x.u16 = objA0.position.x.u16
 	objA1.position.y.u16 = objA0.position.y.u16
 	D0.u16 = objA0.position.x.u16
-
+	
+	
+	CheckGroundCollision()
 	if (isMainCharacter(CHARACTER_SONIC))
 	{
-		// System.writeDisplayLine(stringformat("u16[A1 + 0x14] = %x", u16[A1 + 0x14] ))
-		CheckGroundCollision()
-		// System.writeDisplayLine(stringformat("D0.u16 = %d", D0.u16))
 		if (D1.u16 <= 14)
 		{
 
@@ -249,28 +246,26 @@ function void SonicTailsGround()
 			if (u8[0xffffb000 + 0x20] != char.state.ROLLING)
 			{
 				Audio.playAudio("dropdash_release", AudioContext.CONTEXT_SOUND)
-				// dust
+				// drop dash dust
 				u8[A6 + 0x20] = 0x02
 				u16[A6 + 0x10] = u16[0xffffb000 + 0x10]
 				u16[A6 + 0x14] = (0x4AC)
 				u8[A6 + 0x23] = 0x01
 				u8[A6 + 0x2a] = char.flags & char.flag.FACING_LEFT
-				u8[0xffffb000 + 0x22] = 0x96
+				u8[0xffffb000 + 0x22] = 0x96 // first rolling frame
 			}
 			// char.groundspeed
 			s16[0xffffb000 + 0x1c] = objA0.velocity.x = 0x0800
 			objA0.velocity.y = 0
-			u16[0xffffb000 + 0x14] = 0x4b1
+			u16[0xffffb000 + 0x14] = 0x4b1 // char.position.y
 			player1.control_override = 0xff // Disable P1's controls
 
-			u8[0xffffb000 + 0x20] = char.state.ROLLING
-			u8[0xffffb000 + 0x2a] |= char.flag.ROLLING
+			u8[0xffffb000 + 0x20] = char.state.ROLLING // char.state
+			u8[0xffffb000 + 0x2a] |= char.flag.ROLLING // char.flags
 		}
 	}
 	else // (isMainCharacter(CHARACTER_TAILS))
 	{
-		CheckGroundCollision()
-		// System.writeDisplayLine(stringformat("D1.u16 = %d", D1.u16))
 		if (D1.u16 <= 9)
 		{
 			u8[0xffffb000 + 0x2e] = 0
@@ -280,16 +275,17 @@ function void SonicTailsGround()
 			s16[0xffffb000 + 0x1c] = objA0.velocity.x
 			objA0.velocity.y = 0
 			player1.control_override = 0xff // Disable P1's controls
-			control.player1 = 0x0808
+			control.player1 = 0x0808 // Make the character walk to the right
 		}
 	}
+
 	if (D0.u16 < level.bossarea.right)
 		return
 	
-	player1.control_override = 0
+	player1.control_override = 0 // Player regains control of character
 
 	if (isMainCharacter(CHARACTER_TAILS))
-		s16[0xffffb000 + 0x1c] = 0
+		s16[0xffffb000 + 0x1c] = 0 // Set Tails' ground speed back to 0
 
 	objA0.update_address = 0x07ccb0
 	objA0.countdown_value = 0x06
@@ -361,10 +357,3 @@ function void fn07c144()
 			objA0.hitbox_extends.y = 0x1f
 	}
 }
-
-// //# address-hook(0x07c144) end(0x07c156)
-// function void fn07c144()
-// {
-// 	objA0.hitbox_extends.y = 0x1f
-// 	base.fn07c144()
-// }
