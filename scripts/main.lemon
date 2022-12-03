@@ -20,6 +20,7 @@ function void fn067cba()
 		base.fn067cba()
 }
 
+// Egg mobile explodes
 //# address-hook(0x07cc26) end(0x07cc34)
 function void fn07cc26()
 {
@@ -50,12 +51,9 @@ function void fn07cc26()
 			objA1.sprite_attributes = objA0.sprite_attributes
 			objA1.velocity.x = 0xD0
 			objA1.velocity.y = -0x330
-			// Audio.playAudio("Robotnik_AOSTH", AudioContext.CONTEXT_SOUND)
-			// objA1.velocity.y = -0x310
-			// objA1.velocity.y = -0x2F8
-			// objA1.position.y.u16 += 0xf
-			// objA1.state = 0
-			// objA1.animation.sprite = 0x00
+			u16 Easter = System.rand() % 50 // 2% chance
+			if (Easter == 1)
+				Audio.playAudio("Robotnik_AOSTH", AudioContext.CONTEXT_SOUND)
 		}
 	}
 	base.fn07cc26()
@@ -351,3 +349,22 @@ function bool Standalone.onWriteToSpriteTable(s16 px, s16 py, u16 renderQueue)
 	}
 	return base.Standalone.onWriteToSpriteTable(px, py, renderQueue)
 }
+
+// Fix for Mecha Sonic so that he doesn't go into the great beyond
+//# address-hook(0x07c144) end(0x07c156)
+function void fn07c144()
+{
+	base.fn07c144()
+	if !(isMainCharacter(CHARACTER_KNUCKLES) && u8[0xffffe654] == 0)
+	{
+		if (objA0.base_state == 0x1e)
+			objA0.hitbox_extends.y = 0x1f
+	}
+}
+
+// //# address-hook(0x07c144) end(0x07c156)
+// function void fn07c144()
+// {
+// 	objA0.hitbox_extends.y = 0x1f
+// 	base.fn07c144()
+// }
