@@ -74,8 +74,6 @@ function void Eggmanfalls()
 	DrawObject() // spawn falling eggman
 }
 
-// Sonic and Tails escaping
-
 // escaping the claw
 //# address-hook(0x07cc3a) end(0x07cc62)
 function void fn07cc3a()
@@ -163,9 +161,6 @@ function void fn07cd82()
 	if (!skipPart())
 	{
 		A1 = 0xffffb000
-		global.level_started = 0 // turn off hud
-
-
 
 		if (u8[0xffffe654] != 0)
 		{
@@ -186,6 +181,12 @@ function void fn07cd82()
 function void fn07ce42()
 {
 	base.fn07ce42()
+	
+	// Have the hud scroll out instead of disappearing
+	if (global.level_started >= -104)
+		global.level_started -= 15
+	else if (global.level_started < -104)
+		global.level_started = -119
 
 	if (u8[0xffffe654] != 0)
 	{
@@ -321,8 +322,6 @@ function void Hudflysin()
 		return
 	global.level_started = -0x6f // let hud fly in
 }
-
-
 
 global bool Egg.Glasses
 
