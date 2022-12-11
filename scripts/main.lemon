@@ -1,3 +1,6 @@
+global bool Egg.Glasses
+global bool Hud.Scroll
+
 // Set eggman/eggrobo to burned state
 //# address-hook(0x07cbce) end(0x07cc10)
 function void fn07cbce()
@@ -44,7 +47,7 @@ function void fn07cc26()
 		if (allocDynamicObjectStd())
 		{
 			u8[A1 + 0x04] = (render_flag.WORLD)
-			objA1.update_address = 0x200070
+			objA1.update_address = 0x200090
 			objA1.position.x.u16 = objA0.position.x.u16
 			objA1.position.y.u16 = objA0.position.y.u16
 			objA1.state = 0
@@ -59,7 +62,7 @@ function void fn07cc26()
 	base.fn07cc26()
 }
 
-//# address-hook(0x200070)
+//# address-hook(0x200090)
 function void Eggmanfalls()
 {
 	if (objA0.velocity.y >= 0xb28)
@@ -161,6 +164,9 @@ function void fn07cd82()
 	if (!skipPart())
 	{
 		A1 = 0xffffb000
+		
+		if (!Hud.Scroll)
+			global.level_started = 0
 
 		if (u8[0xffffe654] != 0)
 		{
@@ -183,10 +189,13 @@ function void fn07ce42()
 	base.fn07ce42()
 	
 	// Have the hud scroll out instead of disappearing
-	if (global.level_started >= -104)
-		global.level_started -= 23
-	else if (global.level_started < -104)
-		global.level_started = -127
+	if (Hud.Scroll)
+	{
+		if (global.level_started >= -104)
+			global.level_started -= 15
+		else if (global.level_started < -104)
+			global.level_started = -119
+	}
 
 	if (u8[0xffffe654] != 0)
 	{
@@ -303,6 +312,7 @@ function void fn07cc68()
 	{
 		if (XtraOnGround())
 		{
+			Hudflysin()
 			return
 		}
 	}
@@ -311,14 +321,24 @@ function void fn07cc68()
 		base.fn07cc68()
 	else
 		SonicTailsGround()
+		
+	Hudflysin()
 }
 
-global bool Egg.Glasses
+function void Hudflysin()
+{
+	if (!Hud.Scroll)
+	{
+		if (D0.u16 < level.bossarea.right)
+			return
+		global.level_started = -0x6f // let hud fly in
+	}
+}
 
 function bool Standalone.onWriteToSpriteTable(s16 px, s16 py, u16 renderQueue)
 {
 
-	if (objA0.update_address == 0x200070)
+	if (objA0.update_address == 0x200090)
 	{
 		// if modded sprites not detected, use the default sprites
 		u8 animationSpriteEx = ((global.framecounter >> 2) & 0x03)
