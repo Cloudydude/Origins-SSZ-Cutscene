@@ -21,6 +21,18 @@
 					"0": "Black",
 					"1": "Blue Glasses"
 				}
+			},
+			{
+				"InternalName": "Scroll",
+				"DisplayName": "Hud Scroll",
+				"Variable": "Hud.Scroll",
+				"DefaultValue": "0",	
+				"Category": "Gameplay",			
+				"Options":
+				{
+					"0": "No",
+					"1": "Yes"
+				}
 			}
 		]
 	}
