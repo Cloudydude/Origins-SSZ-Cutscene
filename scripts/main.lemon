@@ -89,7 +89,7 @@ function void fn07cc3a()
 		return
 	}
 
-	if (isMainCharacter(CHARACTER_KNUCKLES))
+	if (u8[0xfffb000 + 0x38] == CHARACTER_KNUCKLES)
 		return
 
 	SonicTailsEscaping()
@@ -97,7 +97,7 @@ function void fn07cc3a()
 
 function void XtraEscape()
 {
-	if (!isMainCharacter(CHARACTER_KNUCKLES))
+	if (u8[0xfffb000 + 0x38] != CHARACTER_KNUCKLES)
 		SonicTailsEscaping()
 }
 
@@ -107,9 +107,9 @@ function void SonicTailsEscaping()
 	// objA0.position.x.u16 = objA1.position.x.u16
 	// objA0.position.y.u16 = objA1.position.y.u16
 	// objA0.velocity.x = 0x0400
-	objA0.velocity.y = (isMainCharacter(CHARACTER_SONIC)) ? 0x320 : 0x1e0 // (isMainCharacter(CHARACTER_TAILS))
+	objA0.velocity.y = (u8[0xfffb000 + 0x38] == CHARACTER_SONIC) ? 0x320 : 0x1e0 // (isMainCharacter(CHARACTER_TAILS))
 	
-	if (isMainCharacter(CHARACTER_SONIC))
+	if (u8[0xfffb000 + 0x38] == CHARACTER_SONIC)
 	{
 		Audio.playAudio("dropdash_charge", AudioContext.CONTEXT_SOUND)
 		u8[A1 + 0x20] = char.state.SONIC_DROPDASH
@@ -145,14 +145,14 @@ function bool skipPart()
 
 function void XtraInClaw()
 {
-	if (!isMainCharacter(CHARACTER_KNUCKLES))
+	if (u8[0xfffb000 + 0x38] != CHARACTER_KNUCKLES)
 		SonicTailsInClaw()
 }
 
 function void SonicTailsInClaw()
 {
 	u8[A1 + 0x20] = char.state.LIFTED
-	objA1.animation.sprite = (isMainCharacter(CHARACTER_TAILS)) ? 0xb6 : 0xc9
+	objA1.animation.sprite = (u8[0xfffb000 + 0x38] == CHARACTER_TAILS) ? 0xb6 : 0xc9
 }
 
 // In the claw
@@ -175,7 +175,7 @@ function void fn07cd82()
 		}
 
 
-		if (isMainCharacter(CHARACTER_KNUCKLES))
+		if (u8[0xfffb000 + 0x38] == CHARACTER_KNUCKLES)
 			return
 
 		SonicTailsInClaw()
@@ -203,7 +203,7 @@ function void fn07ce42()
 		return
 	}
 
-	if (isMainCharacter(CHARACTER_KNUCKLES))
+	if (u8[0xfffb000 + 0x38] == CHARACTER_KNUCKLES)
 		return
 
 	SonicTailsClaw()
@@ -213,7 +213,7 @@ function void SonicTailsClaw()
 {
     if ((u8[0xfffffab8] & 0x20) == 0)
     {
-        u8 adjust = (isMainCharacter(CHARACTER_TAILS)) ? 1 : 3
+        u8 adjust = (u8[0xfffb000 + 0x38] == CHARACTER_TAILS) ? 1 : 3
         A1 = 0xffffb000
         objA1.position.x.u16 -= adjust
         objA1.position.y.u16 -= 6
@@ -222,13 +222,13 @@ function void SonicTailsClaw()
 
 function void XtraClawcords()
 {
-    if (!isMainCharacter(CHARACTER_KNUCKLES))
+    if (u8[0xfffb000 + 0x38] != CHARACTER_KNUCKLES)
         SonicTailsClaw()
 }
 
 function bool XtraOnGround()
 {
-	if (isMainCharacter(CHARACTER_KNUCKLES))
+	if (u8[0xfffb000 + 0x38] == CHARACTER_KNUCKLES)
 		return false
 	SonicTailsGround()
 	return true
@@ -244,7 +244,7 @@ function void SonicTailsGround()
 	
 	
 	CheckGroundCollision()
-	if (isMainCharacter(CHARACTER_SONIC))
+	if (u8[0xfffb000 + 0x38] == CHARACTER_SONIC)
 	{
 		if (D1.u16 <= 14)
 		{
@@ -294,14 +294,14 @@ function void SonicTailsGround()
 	
 	player1.control_override = 0 // Player regains control of character
 
-	if (isMainCharacter(CHARACTER_TAILS))
+	if (u8[0xfffb000 + 0x38] == CHARACTER_TAILS)
 		s16[0xffffb000 + 0x1c] = 0 // Set Tails' ground speed back to 0
 
 	objA0.update_address = 0x07ccb0
 	objA0.countdown_value = 0x06
 	objA0.velocity.x = 0
 	objA0.velocity.y = 0
-	objA0.hitbox_extends.y = (isMainCharacter(CHARACTER_TAILS)) ? 0x10 : 0x0e
+	objA0.hitbox_extends.y = (u8[0xfffb000 + 0x38] == CHARACTER_TAILS) ? 0x10 : 0x0e
 }
 
 // On the ground
@@ -317,7 +317,7 @@ function void fn07cc68()
 		}
 	}
 
-	if (isMainCharacter(CHARACTER_KNUCKLES))
+	if (u8[0xfffb000 + 0x38] == CHARACTER_KNUCKLES)
 		base.fn07cc68()
 	else
 		SonicTailsGround()
@@ -360,7 +360,7 @@ function bool Standalone.onWriteToSpriteTable(s16 px, s16 py, u16 renderQueue)
 function void fn07c144()
 {
 	base.fn07c144()
-	if !(isMainCharacter(CHARACTER_KNUCKLES) && u8[0xffffe654] == 0)
+	if ((u8[0xfffb000 + 0x38] != CHARACTER_KNUCKLES) && u8[0xffffe654] == 0)
 	{
 		if (objA0.base_state == 0x1e)
 			objA0.hitbox_extends.y = 0x1f
